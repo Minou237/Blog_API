@@ -165,9 +165,9 @@
 
     <div class="scard">
       <div class="scard-title t-red">Nouvel article</div>
-      <div class="field"><label>Titre *</label><input type="text" id="f-titre" placeholder="Titre de l article"/></div>
+      <div class="field"><label>Titre *</label><input type="text" id="f-titre" placeholder="Titre de l'article"/></div>
       <div class="field"><label>Auteur *</label><input type="text" id="f-auteur" placeholder="Votre nom"/></div>
-      <div class="field"><label>Categorie</label><input type="text" id="f-categorie" placeholder="ex: Technologie"/></div>
+      <div class="field"><label>Catégorie</label><input type="text" id="f-catégorie" placeholder="ex: Technologie"/></div>
       <div class="field"><label>Tags</label><input type="text" id="f-tags" placeholder="ex: web, html, node"/></div>
       <div class="field"><label>Contenu *</label><textarea id="f-contenu" placeholder="Redigez votre article..."></textarea></div>
       <div class="btn-row">
@@ -192,7 +192,7 @@
 
     <div class="scard">
       <div class="scard-title t-green">Filtrer</div>
-      <div class="field"><label>Categorie</label><input type="text" id="s-cat" placeholder="ex: Technologie"/></div>
+      <div class="field"><label>Catégorie</label><input type="text" id="s-cat" placeholder="ex: Technologie"/></div>
       <div class="field"><label>Auteur</label><input type="text" id="s-auteur" placeholder="ex: Charles"/></div>
       <div class="field"><label>Date</label><input type="date" id="s-date"/></div>
       <button class="btn btn-dark" onclick="filtrer()">Appliquer les filtres</button>
@@ -203,7 +203,7 @@
   <!-- MAIN -->
   <main>
     <div class="main-header">
-      <div class="main-title">Articles publies</div>
+      <div class="main-title">Articles publiés</div>
       <div class="main-count" id="main-count">Chargement...</div>
     </div>
     <div class="articles-list" id="liste">
@@ -223,7 +223,7 @@
       <div class="field"><label>Auteur *</label><input type="text" id="e-auteur"/></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Categorie</label><input type="text" id="e-categorie"/></div>
+      <div class="field"><label>Catégorie</label><input type="text" id="e-catégorie"/></div>
       <div class="field"><label>Tags</label><input type="text" id="e-tags"/></div>
     </div>
     <div class="field"><label>Contenu *</label><textarea id="e-contenu" style="min-height:100px"></textarea></div>
@@ -296,7 +296,7 @@
         '</div>' +
         '<div class="card-meta">' +
           '<span class="meta-pill">&#9997;&#65039; ' + esc(a.auteur) + '</span>' +
-          '<span class="meta-pill" style="color:' + col + ';border-color:' + col + '30;background:' + col + '15">&#128193; ' + esc(a.categorie || "General") + '</span>' +
+          '<span class="meta-pill" style="color:' + col + ';border-color:' + col + '30;background:' + col + '15">&#128193; ' + esc(a.catégorie || "General") + '</span>' +
           '<span class="meta-pill">&#128197; ' + fmtDate(a.date) + '</span>' +
         '</div>' +
         '<div class="card-excerpt">' +
@@ -317,7 +317,7 @@
     if (full.style.display === "none") {
       ext.style.display  = "none";
       full.style.display = "inline";
-      btn.textContent    = "Reduire";
+      btn.textContent    = "Réduire";
     } else {
       full.style.display = "none";
       ext.style.display  = "inline";
@@ -332,7 +332,7 @@
     cnt.textContent  = list.length + " article" + (list.length > 1 ? "s" : "");
     stat.textContent = list.length;
     if (!list.length) {
-      el.innerHTML = '<div class="empty"><span class="empty-icon">&#128237;</span><p class="empty-text">Aucun article trouve.</p></div>';
+      el.innerHTML = '<div class="empty"><span class="empty-icon">&#128237;</span><p class="empty-text">Aucun article trouvé.</p></div>';
       return;
     }
     el.innerHTML = list.map(buildCard).join("");
@@ -368,18 +368,18 @@
         document.getElementById(id).value = "";
       });
       charger();
-    } catch(e) { toast("Erreur reseau.", "err"); }
+    } catch(e) { toast("Erreur réseau.", "err"); }
   }
 
   async function suppr(id) {
-    if (!confirm("Supprimer l article #" + id + " ?")) return;
+    if (!confirm("Supprimer l'article #" + id + " ?")) return;
     try {
       var r = await fetch(API + "/" + id, { method: "DELETE" });
       var d = await r.json();
       if (!r.ok) { toast(d.erreur || "Erreur.", "err"); return; }
-      toast("Article #" + id + " supprime.");
+      toast("Article #" + id + " supprimé.");
       charger();
-    } catch(e) { toast("Erreur reseau.", "err"); }
+    } catch(e) { toast("Erreur réseau.", "err"); }
   }
 
   async function chercher() {
@@ -390,7 +390,7 @@
       var d = await r.json();
       if (!r.ok) { toast(d.erreur || "Erreur.", "err"); return; }
       afficher(d.articles || []);
-    } catch(e) { toast("Erreur reseau.", "err"); }
+    } catch(e) { toast("Erreur réseau.", "err"); }
   }
 
   async function filtrer() {
@@ -398,7 +398,7 @@
     var cat    = document.getElementById("s-cat").value.trim();
     var auteur = document.getElementById("s-auteur").value.trim();
     var date   = document.getElementById("s-date").value;
-    if (cat)    p.append("categorie", cat);
+    if (cat)    p.append("catégorie", cat);
     if (auteur) p.append("auteur",    auteur);
     if (date)   p.append("date",      date);
     if (!p.toString()) { charger(); return; }
@@ -407,19 +407,19 @@
       var d = await r.json();
       if (!r.ok) { toast(d.erreur || "Erreur.", "err"); return; }
       afficher(d.articles || []);
-    } catch(e) { toast("Erreur reseau.", "err"); }
+    } catch(e) { toast("Erreur réseau.", "err"); }
   }
 
   async function ouvrir(id) {
     try {
       var r = await fetch(API + "/" + id);
       var a = await r.json();
-      if (!r.ok) { toast(a.erreur || "Erreur.", "err"); return; }
+      if (!r.ok) { toast(a.érreur || "Erreur.", "err"); return; }
       document.getElementById("e-id").value        = a._id;
       document.getElementById("e-titre").value     = a.titre     || "";
       document.getElementById("e-auteur").value    = a.auteur    || "";
       document.getElementById("e-contenu").value   = a.contenu   || "";
-      document.getElementById("e-categorie").value = a.categorie || "";
+      document.getElementById("e-catégorie").value = a.categorie || "";
       document.getElementById("e-tags").value      = (a.tags||[]).join(", ");
       document.getElementById("ov").classList.add("open");
     } catch(e) { toast("Impossible de charger.", "err"); }
@@ -441,13 +441,13 @@
       var r = await fetch(API + "/" + id, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titre:titre, auteur:auteur, contenu:contenu, categorie:categorie, tags:tags })
+        body: JSON.stringify({ titre:titre, auteur:auteur, contenu:contenu, catégorie:categorie, tags:tags })
       });
       var d = await r.json();
-      if (!r.ok) { toast(d.erreur || "Erreur.", "err"); return; }
+      if (!r.ok) { toast(d.érreur || "Erreur.", "err"); return; }
       toast("Article #" + id + " mis a jour !");
       fermer(); charger();
-    } catch(e) { toast("Erreur reseau.", "err"); }
+    } catch(e) { toast("Erreur réseau.", "err"); }
   }
 
   document.getElementById("ov").addEventListener("click", function(e){
